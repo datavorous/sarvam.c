@@ -30,6 +30,9 @@ make export
 make
 # run
 make run "your prompt" <number of tokens>
+# optional benchmark harness (ttft + ms/token)
+make benchmark-build
+make benchmark "your prompt" <number of tokens>
 ```
 
 ### How?
