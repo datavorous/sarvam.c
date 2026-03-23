@@ -1,3 +1,4 @@
+#include <openblas/cblas.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,12 +32,15 @@ typedef struct {
 
 static void matmul(float* out, float* x, float* W, int n, int d)
 {
+    /*
     for (int i = 0; i < d; i++) {
         float val = 0;
         for (int j = 0; j < n; j++)
             val += x[j] * W[i * n + j];
         out[i] = val;
     }
+    */
+    cblas_sgemv(CblasRowMajor, CblasNoTrans, d, n, 1.0f, W, n, x, 1, 0.0f, out, 1);
 }
 
 static void rmsnorm(float* out, float* x, float* w, int n)

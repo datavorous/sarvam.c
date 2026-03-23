@@ -1,6 +1,7 @@
 CC := gcc
 CFLAGS := -O3 -ffast-math -march=native -funroll-loops -fomit-frame-pointer
 LDFLAGS := -lm
+BLAS_LIBS := -lopenblas
 SHELL := /bin/bash
 UV := uv
 VENV_DIR := .venv
@@ -54,13 +55,13 @@ build: $(BIN)
 
 $(BIN): $(SRC)
 	mkdir -p artifacts
-	$(CC) $(CFLAGS) -o $(BIN) $(SRC) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(BIN) $(SRC) $(LDFLAGS) $(BLAS_LIBS)
 
 benchmark-build: $(BENCH_BIN)
 
 $(BENCH_BIN): $(BENCH_SRC) $(SRC)
 	mkdir -p artifacts
-	$(CC) $(CFLAGS) -DSARVAM_LIB_ONLY -o $(BENCH_BIN) $(BENCH_SRC) $(SRC) $(LDFLAGS)
+	$(CC) $(CFLAGS) -DSARVAM_LIB_ONLY -o $(BENCH_BIN) $(BENCH_SRC) $(SRC) $(LDFLAGS) $(BLAS_LIBS)
 
 run: build
 	@args='$(EXTRA_GOALS)'; \
